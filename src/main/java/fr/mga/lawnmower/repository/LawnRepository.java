@@ -27,6 +27,10 @@ public class LawnRepository {
    */
   public Coordinate getUpperRightCoordinate() {
     String[] splittedLine = line.split(SEPARATOR);
-    return Coordinate.from(Integer.valueOf(splittedLine[0]), Integer.valueOf(splittedLine[1]));
+    if(splittedLine.length == 2) {
+      return Coordinate.from(Integer.valueOf(splittedLine[0]), Integer.valueOf(splittedLine[1]));
+    } else {
+      throw new IllegalArgumentException("error parsing coordinate for lawn " + line);
+    }
   }
 }

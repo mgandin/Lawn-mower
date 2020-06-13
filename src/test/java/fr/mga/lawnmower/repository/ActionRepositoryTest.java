@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ActionRepositoryTest {
 
@@ -61,5 +62,14 @@ public class ActionRepositoryTest {
       new Action(18, 2, Command.RIGHT),
       new Action(19, 2, Command.FORWARD)
     );
+  }
+
+  @Test
+  public void should_not_parse() {
+    // Given
+    ActionRepository actionRepository = new ActionRepository(Arrays.asList(""));
+    // When
+    // Then
+    assertThatThrownBy(actionRepository::findAll).hasMessage("error parsing empty command");
   }
 }

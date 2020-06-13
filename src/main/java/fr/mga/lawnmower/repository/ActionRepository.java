@@ -33,10 +33,14 @@ public class ActionRepository {
     int actionId = 0;
     for (int i = 0; i < lines.size(); i++) {
       String line = this.lines.get(i);
-      String[] actionsAsString = line.split(SEPARATOR);
-      for (int j = 0; j < actionsAsString.length; j++) {
-        Action action = new Action(++actionId, i + 1, Command.fromLabel(actionsAsString[j]));
-        actions.add(action);
+      if(!line.isBlank() || !line.isEmpty()) {
+        String[] actionsAsString = line.split(SEPARATOR);
+        for (int j = 0; j < actionsAsString.length; j++) {
+          Action action = new Action(++actionId, i + 1, Command.fromLabel(actionsAsString[j]));
+          actions.add(action);
+        }
+      } else {
+        throw new IllegalArgumentException("error parsing empty command");
       }
     }
     return actions;

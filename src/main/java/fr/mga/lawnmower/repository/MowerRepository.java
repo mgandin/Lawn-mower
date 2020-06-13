@@ -37,8 +37,12 @@ public class MowerRepository {
     Integer mowerIds = 0;
     for(String line : lines) {
       String[] mowerAsString = line.split(SEPARATOR);
-      Coordinate coordinate = new Coordinate(Integer.valueOf(mowerAsString[0]), Integer.valueOf(mowerAsString[1]));
-      mowers.put(++mowerIds,new Mower(Position.fromLabel(mowerAsString[2]), coordinate));
+      if(mowerAsString.length == 3) {
+        Coordinate coordinate = new Coordinate(Integer.valueOf(mowerAsString[0]), Integer.valueOf(mowerAsString[1]));
+        mowers.put(++mowerIds,new Mower(Position.fromLabel(mowerAsString[2]), coordinate));
+      } else {
+        throw new IllegalArgumentException("error parsing mower " + line);
+      }
     }
     return mowers;
   }

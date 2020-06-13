@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class MowerRepositoryTest {
 
@@ -28,5 +29,15 @@ public class MowerRepositoryTest {
 
     // Then
     assertThat(allMowers).isEqualTo(expectedMowers);
+  }
+
+  @Test
+  public void should_not_parse() {
+    // Given
+    MowerRepository mowerRepository = new MowerRepository(Arrays.asList("12N"));
+
+    // When
+    // Then
+    assertThatThrownBy(mowerRepository::findAll).hasMessage("error parsing mower 12N");
   }
 }
