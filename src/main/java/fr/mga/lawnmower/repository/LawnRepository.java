@@ -10,27 +10,28 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class LawnRepository {
   public static final String SEPARATOR = " ";
-  private final String line;
+
+  private Coordinate coordinate;
 
   /**
    * @param line to parse
    */
-  public LawnRepository(String line) {
-    this.line = line;
+  public void parse(String line) {
     checkNotNull(line);
     checkArgument(!line.isEmpty(), "line should not be empty");
     checkArgument(!line.isBlank(), "line should not be blank");
+    String[] splittedLine = line.split(SEPARATOR);
+    if(splittedLine.length == 2) {
+      coordinate = Coordinate.from(Integer.valueOf(splittedLine[0]), Integer.valueOf(splittedLine[1]));
+    } else {
+      throw new IllegalArgumentException("error parsing coordinate for lawn " + line);
+    }
   }
 
   /**
    * @return Upper right corner's coordinate
    */
   public Coordinate getUpperRightCoordinate() {
-    String[] splittedLine = line.split(SEPARATOR);
-    if(splittedLine.length == 2) {
-      return Coordinate.from(Integer.valueOf(splittedLine[0]), Integer.valueOf(splittedLine[1]));
-    } else {
-      throw new IllegalArgumentException("error parsing coordinate for lawn " + line);
-    }
+    return coordinate;
   }
 }

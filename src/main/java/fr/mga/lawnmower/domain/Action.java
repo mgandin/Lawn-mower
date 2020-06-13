@@ -7,7 +7,7 @@ import java.util.Objects;
  */
 public class Action implements Comparable<Action> {
   private final Integer id;
-  private final Integer mowerId;
+  private final String mowerId;
   private final Command command;
 
   /**
@@ -15,13 +15,13 @@ public class Action implements Comparable<Action> {
    * @param mowerId mower's ID
    * @param command command to execute
    */
-  public Action(Integer id, Integer mowerId, Command command) {
+  public Action(Integer id, String mowerId, Command command) {
     this.id = id;
     this.mowerId = mowerId;
     this.command = command;
   }
 
-  public Integer getMowerId() {
+  public String getMowerId() {
     return mowerId;
   }
 

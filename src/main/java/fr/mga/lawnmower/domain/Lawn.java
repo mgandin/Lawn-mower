@@ -21,7 +21,7 @@ public class Lawn {
 
   private final Coordinate upperRightCorner;
   private final Coordinate bottomLeftCorner;
-  private final Map<Integer, Mower> mowers;
+  private final Map<String, Mower> mowers;
   private final PriorityQueue<Action> actions;
 
   /**
@@ -30,7 +30,7 @@ public class Lawn {
    * @param mowers Map of initiale position of mowers
    * @param actions Queue of actions for mowers
    */
-  public Lawn(Coordinate bottomLeftCorner, Coordinate upperRightCorner, Map<Integer, Mower> mowers,
+  public Lawn(Coordinate bottomLeftCorner, Coordinate upperRightCorner, Map<String, Mower> mowers,
     PriorityQueue<Action> actions) {
     this.upperRightCorner = upperRightCorner;
     this.bottomLeftCorner = bottomLeftCorner;
@@ -63,13 +63,13 @@ public class Lawn {
    * @param mowerId id of mower (for filtering other mowers)
    * @return
    */
-  private boolean canMove(Command command, Mower mower, Integer mowerId) {
-    Set<Integer> otherMowerIds = mowers.keySet()
+  private boolean canMove(Command command, Mower mower, String mowerId) {
+    Set<String> otherMowerIds = mowers.keySet()
       .stream()
       .filter(id -> !id.equals(mowerId))
       .collect(toSet());
     boolean canBumpIntoMower = false;
-    for(Integer otherMowerId : otherMowerIds) {
+    for(String otherMowerId : otherMowerIds) {
       Mower otherMower = mowers.get(otherMowerId);
       if(!mower.canMove(command, otherMower)) {
         canBumpIntoMower = true;

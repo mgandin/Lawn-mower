@@ -4,11 +4,9 @@ import fr.mga.lawnmower.domain.Action;
 import fr.mga.lawnmower.domain.Coordinate;
 import fr.mga.lawnmower.domain.Lawn;
 import fr.mga.lawnmower.domain.Mower;
-import fr.mga.lawnmower.repository.ActionRepository;
+import fr.mga.lawnmower.repository.ActionAndMowerRepository;
 import fr.mga.lawnmower.repository.LawnRepository;
-import fr.mga.lawnmower.repository.MowerRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -20,28 +18,26 @@ import java.util.PriorityQueue;
 public class LawnParser {
 
   private final LawnRepository lawnRepository;
-  private final ActionRepository actionRepository;
-  private final MowerRepository mowerRepository;
+
+  private final ActionAndMowerRepository actionRepository;
+
+  public LawnParser(LawnRepository lawnRepository, ActionAndMowerRepository actionRepository) {
+    this.lawnRepository = lawnRepository;
+    this.actionRepository = actionRepository;
+  }
 
   /**
    * @param toParse each lines of the file to parse
    */
-  public LawnParser(List<String> toParse) {
-    this.lawnRepository = new LawnRepository(toParse.get(0));
-    List<String> actionsAsString = new ArrayList<>();
-    List<String> mowersAsString = new ArrayList<>();
-    int i = 0;
-    for (String line : toParse) {
-      if(i % 2 == 0 && i != 0) {
-        actionsAsString.add(line);
-      } else if(i != 0) {
-        mowersAsString.add(line);
+  public void parse(List<String> toParse) {
+    this.lawnRepository.parse(toParse.get(0));
+    for (int i = 0; i < toParse.size(); i++) {
+      if(!(i % 2 == 0)) {
+        String mower = toParse.get(i);
+        String commands = toParse.get(i+1);
+        this.actionRepository.addLines(mower, commands);
       }
-      i++;
     }
-
-    actionRepository = new ActionRepository(actionsAsString);
-    mowerRepository = new MowerRepository(mowersAsString);
   }
 
   /**
@@ -53,11 +49,11 @@ public class LawnParser {
       actions());
   }
 
-  private Map<Integer, Mower> mowers() {
-    return mowerRepository.findAll();
+  private Map<String, Mower> mowers() {
+    return actionRepository.findMowers();
   }
 
   private PriorityQueue<Action> actions() {
-    return actionRepository.findAll();
+    return actionRepository.findActions();
   }
 }

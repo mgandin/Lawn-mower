@@ -2,6 +2,8 @@ package fr.mga.lawnmower;
 
 import com.google.common.io.Files;
 import fr.mga.lawnmower.parser.LawnParser;
+import fr.mga.lawnmower.repository.ActionAndMowerRepository;
+import fr.mga.lawnmower.repository.LawnRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +16,8 @@ public class Runner {
     if(args.length != 0) {
       try {
         List<String> strings = Files.readLines(new File(args[0]), StandardCharsets.UTF_8);
-        LawnParser parser = new LawnParser(strings);
+        LawnParser parser = new LawnParser(new LawnRepository(), new ActionAndMowerRepository());
+        parser.parse(strings);
         parser.lawn().mow().forEach(System.out::println);
       } catch (IllegalArgumentException e) {
         System.out.println("ERROR : " + e);

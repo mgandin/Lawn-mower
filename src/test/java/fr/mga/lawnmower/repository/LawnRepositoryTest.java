@@ -11,9 +11,11 @@ public class LawnRepositoryTest {
   @Test
   public void should_get_upper_right_coordinate() {
     // Given
-    LawnRepository lawnRepository = new LawnRepository("5 5");
+    LawnRepository lawnRepository = new LawnRepository();
 
     // When
+    lawnRepository.parse("5 5");
+
     // Then
     assertThat(lawnRepository.getUpperRightCoordinate()).isEqualTo(Coordinate.from(5, 5));
   }
@@ -21,10 +23,9 @@ public class LawnRepositoryTest {
   @Test
   public void should_not_parse() {
     // Given
-    LawnRepository lawnRepository = new LawnRepository("55");
-
+    LawnRepository lawnRepository = new LawnRepository();
     // When
     // Then
-    assertThatThrownBy(lawnRepository::getUpperRightCoordinate).hasMessage("error parsing coordinate for lawn 55");
+    assertThatThrownBy(() -> lawnRepository.parse("55")).hasMessage("error parsing coordinate for lawn 55");
   }
 }
