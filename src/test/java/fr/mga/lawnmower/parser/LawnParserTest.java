@@ -15,10 +15,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class LawnParserTest {
   @Test
-  public void should_parse_lines_to_create_lawn() {
+  public void should_parse_lines_to_create_lawn() throws InterruptedException {
     // Given
-    List<String> lines = Arrays.asList("5 5", "1 2 N", "LFLFLFLFF", "3 3 E", "FFRFFRFRRF");
+    List<String> lines = Arrays.asList("1 2 N", "LFLFLFLFF", "3 3 E", "FFRFFRFRRF");
     LawnParser parser = new LawnParser(new LawnRepository(), new ActionAndMowerRepository());
+    parser.parseHeader("5 5");
     parser.parse(lines);
     // When
     Lawn lawn = parser.lawn();

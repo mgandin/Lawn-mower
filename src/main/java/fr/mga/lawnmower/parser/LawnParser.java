@@ -26,13 +26,16 @@ public class LawnParser {
     this.actionRepository = actionRepository;
   }
 
+  public void parseHeader(String header) {
+    this.lawnRepository.parse(header);
+  }
+
   /**
    * @param toParse each lines of the file to parse
    */
   public void parse(List<String> toParse) {
-    this.lawnRepository.parse(toParse.get(0));
     for (int i = 0; i < toParse.size(); i++) {
-      if(!(i % 2 == 0)) {
+      if(i % 2 == 0) {
         String mower = toParse.get(i);
         String commands = toParse.get(i+1);
         this.actionRepository.addLines(mower, commands);

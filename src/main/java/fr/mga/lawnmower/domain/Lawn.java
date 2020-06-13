@@ -1,6 +1,8 @@
 package fr.mga.lawnmower.domain;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -21,8 +23,8 @@ public class Lawn {
 
   private final Coordinate upperRightCorner;
   private final Coordinate bottomLeftCorner;
-  private final Map<String, Mower> mowers;
-  private final PriorityQueue<Action> actions;
+  private final ConcurrentHashMap<String, Mower> mowers;
+  private final PriorityBlockingQueue<Action> actions;
 
   /**
    * @param upperRightCorner upper right corner Coordinate of the Lawn
@@ -34,22 +36,22 @@ public class Lawn {
     PriorityQueue<Action> actions) {
     this.upperRightCorner = upperRightCorner;
     this.bottomLeftCorner = bottomLeftCorner;
-    this.mowers = mowers;
-    this.actions = actions;
+    this.mowers = new ConcurrentHashMap<>(mowers);
+    this.actions = new PriorityBlockingQueue<>(actions);
   }
 
   /**
    * It mow the Lawn
    * @return Mowers last positions after the lawn has been mowed
    */
-  public List<Mower> mow() {
+  public List<Mower> mow() throws InterruptedException {
     while (actions.iterator().hasNext()) {
-      Action action = actions.poll();
+      Action action = actions.take();
       Mower mower = mowers.get(action.getMowerId());
       Command command = action.getCommand();
       if (canMove(command, mower, action.getMowerId())) {
         Mower newMower = mower.move(command);
-        mowers.put(action.getMowerId(), newMower);
+        mowers.computeIfPresent(action.getMowerId(), (key, value) -> newMower);
       }
     }
     return new ArrayList<>(mowers.values());

@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LawnTest {
 
   @Test
-  public void should_one_mower_do_commands() {
+  public void should_one_mower_do_commands() throws InterruptedException {
     // Given
     Map<String, Mower> mowers = new HashMap<>();
     PriorityQueue<Action> actions = new PriorityQueue<>();
@@ -28,7 +28,7 @@ public class LawnTest {
   }
 
   @Test
-  public void should_first_mower_do_full_commands() {
+  public void should_first_mower_do_full_commands() throws InterruptedException {
     // Given
 
     Map<String, Mower> mowers = new HashMap<>();
@@ -55,7 +55,7 @@ public class LawnTest {
   }
 
   @Test
-  public void should_second_mower_do_full_commands() {
+  public void should_second_mower_do_full_commands() throws InterruptedException {
     Map<String, Mower> mowers = new HashMap<>();
     mowers.put("2", new Mower(Position.EAST, new Coordinate(3, 3)));
     PriorityQueue<Action> actions = new PriorityQueue<>();
@@ -82,7 +82,7 @@ public class LawnTest {
   }
 
   @Test
-  public void should_two_mowers_do_commands() {
+  public void should_two_mowers_do_commands() throws InterruptedException {
     // Given
     Map<String, Mower> mowers = new HashMap<>();
 
