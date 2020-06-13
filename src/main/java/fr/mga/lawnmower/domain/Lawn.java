@@ -30,7 +30,7 @@ public class Lawn {
    * @param mowers Map of initiale position of mowers
    * @param actions Queue of actions for mowers
    */
-  public Lawn(Coordinate upperRightCorner, Coordinate bottomLeftCorner, Map<Integer, Mower> mowers,
+  public Lawn(Coordinate bottomLeftCorner, Coordinate upperRightCorner, Map<Integer, Mower> mowers,
     PriorityQueue<Action> actions) {
     this.upperRightCorner = upperRightCorner;
     this.bottomLeftCorner = bottomLeftCorner;

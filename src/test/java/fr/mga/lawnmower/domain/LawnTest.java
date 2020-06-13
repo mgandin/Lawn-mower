@@ -18,13 +18,13 @@ public class LawnTest {
     actions.add(new Action(1, 1,Command.LEFT));
     actions.add(new Action(2, 1,Command.FORWARD));
     actions.add(new Action(3, 1,Command.LEFT));
-    Lawn lawn = new Lawn(Coordinate.from(5, 5), new Coordinate(), mowers, actions);
+    Lawn lawn = new Lawn(new Coordinate(), Coordinate.from(5, 5), mowers, actions);
 
     // When
-    List<Mower> dudesAfterLawnMower = lawn.mow();
+    List<Mower> mowersAfterActions = lawn.mow();
 
     // Then
-    assertThat(dudesAfterLawnMower).containsExactly(new Mower(Position.SOUTH, new Coordinate(0, 2)));
+    assertThat(mowersAfterActions).containsExactly(new Mower(Position.SOUTH, new Coordinate(0, 2)));
   }
 
   @Test
@@ -43,7 +43,7 @@ public class LawnTest {
     actions.add(new Action(8,1,Command.FORWARD));
     actions.add(new Action(9,1,Command.FORWARD));
 
-    Lawn lawn = new Lawn(Coordinate.from(5, 5), new Coordinate(), mowers, actions);
+    Lawn lawn = new Lawn(new Coordinate(), Coordinate.from(5, 5), mowers, actions);
 
     // When
     List<Mower> mowersAfterActions = lawn.mow();
@@ -70,13 +70,13 @@ public class LawnTest {
     actions.add(new Action(9, 2, Command.RIGHT));
     actions.add(new Action(10, 2, Command.FORWARD));
 
-    Lawn lawn = new Lawn(Coordinate.from(5, 5), new Coordinate(), mowers, actions);
+    Lawn lawn = new Lawn(new Coordinate(), Coordinate.from(5, 5), mowers, actions);
 
     // When
-    List<Mower> dudesAfterLawnMower = lawn.mow();
+    List<Mower> mowersAfterActions = lawn.mow();
 
     // Then
-    assertThat(dudesAfterLawnMower).containsExactlyInAnyOrder(
+    assertThat(mowersAfterActions).containsExactlyInAnyOrder(
       new Mower(Position.EAST, new Coordinate(5, 1)));
   }
 
@@ -108,13 +108,13 @@ public class LawnTest {
     actions.add(new Action(18, 2, Command.RIGHT));
     actions.add(new Action(19, 2, Command.FORWARD));
 
-    Lawn lawn = new Lawn(Coordinate.from(5, 5), new Coordinate(), mowers, actions);
+    Lawn lawn = new Lawn(new Coordinate(), Coordinate.from(5, 5), mowers, actions);
 
     // When
-    List<Mower> dudesAfterLawnMower = lawn.mow();
+    List<Mower> mowersAfterActions = lawn.mow();
 
     // Then
-    assertThat(dudesAfterLawnMower).containsExactlyInAnyOrder(
+    assertThat(mowersAfterActions).containsExactlyInAnyOrder(
       new Mower(Position.NORTH, new Coordinate(1, 3)),
       new Mower(Position.EAST, new Coordinate(5, 1)));
   }
