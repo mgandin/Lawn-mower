@@ -83,9 +83,6 @@ public class Mower {
   }
 
   @Override public String toString() {
-    return "Mower{" +
-      "position=" + position +
-      ", coordinate=" + coordinate +
-      '}';
+    return coordinate.getX() + " " + coordinate.getY() + " " + position.getLabel();
   }
 }

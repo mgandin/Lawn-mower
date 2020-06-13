@@ -60,6 +60,13 @@ public enum Position {
     return forwardY;
   }
 
+  /**
+   * @return label
+   */
+  public String getLabel() {
+    return label;
+  }
+
   public static Position fromLabel(String label) {
     for (Position position : Position.values()) {
       if (position.label.equalsIgnoreCase(label)) {
